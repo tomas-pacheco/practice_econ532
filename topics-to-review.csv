@@ -1,0 +1,7 @@
+id,year,exam_type (verify),question,title,points,suggested_topics (edit and confirm),include_in_random
+2016-q01,2016,To confirm,1,Looking back,10,Hypothesis testing | Chi-square test | Discrete distributions,True
+2016-q02,2016,To confirm,2,The Great Expectations,20,Descriptive statistics | Hypothesis testing | Paired data,True
+2016-q03,2016,To confirm,3,Asymptotics,25,Asymptotic theory | Convergence in probability | Central limit theorem,True
+2016-q04,2016,To confirm,4,Some theory,30,Maximum likelihood | Asymptotic theory | Fisher information | Efficiency,True
+2016-q05,2016,To confirm,5,Testing/Tasting,15,Hypothesis testing | Neyman–Pearson lemma | Likelihood ratio,True
+2016-q06,2016,To confirm,6,Some Leading Personalities in Statistics who Influenced our Econ 532,10,History of statistics,False

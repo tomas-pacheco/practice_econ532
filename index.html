@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse and practice ECON 532 past-exam questions by year and topic.">
+  <meta name="theme-color" content="#13294b">
+  <title>ECON 532 | Past Exam Question Bank</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+    window.MathJax = {
+      tex: {inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']]},
+      svg: {fontCache: 'global'},
+      options: {skipHtmlTags: ['script','noscript','style','textarea','pre','code']}
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="topbar wrap">
+      <div class="brand"><span class="brand-i" aria-hidden="true">I</span><span><strong>ILLINOIS / ECON 532</strong><small>Past Exam Question Bank</small></span></div>
+      <span class="header-note">ANIL K. BERA · QUESTION ARCHIVE</span>
+    </div>
+    <div class="hero wrap">
+      <div>
+        <p class="eyebrow">EXAM PREPARATION · ECONOMETRICS</p>
+        <h1>Practice the theory.<br><em>Master the questions.</em></h1>
+        <p class="intro">Explore past exam questions, filter by topic and year, and generate your own four-question practice exam.</p>
+        <div class="hero-pills"><span>Original questions</span><span>Math notation</span><span>No login required</span></div>
+      </div>
+      <div class="hero-graphic" aria-hidden="true"><span>ƒ</span><span>∑</span><span>χ²</span></div>
+    </div>
+  </header>
+  <main class="wrap main-content">
+    <div class="mode-tabs" role="tablist" aria-label="Page mode">
+      <button id="tab-bank" class="mode-tab active" role="tab" aria-selected="true" aria-controls="panel-bank" type="button">Question bank</button>
+      <button id="tab-exam" class="mode-tab" role="tab" aria-selected="false" aria-controls="panel-exam" type="button">Practice exam generator</button>
+    </div>
+    <section id="panel-bank" role="tabpanel" aria-labelledby="tab-bank">
+      <div class="section-heading"><div><p class="eyebrow orange">THE ARCHIVE</p><h2>Find a question</h2></div><p class="counts" id="bank-count">Loading…</p></div>
+      <div class="filterbar">
+        <label class="filterfield searchfield"><span>Search</span><input id="query" type="search" autocomplete="off" placeholder="Try: asymptotics, CLT, MLE…"></label>
+        <label class="filterfield"><span>Topic</span><select id="topic"><option value="">All topics</option></select></label>
+        <label class="filterfield yearfield"><span>Year</span><select id="year"><option value="">All years</option></select></label>
+        <button id="reset" type="button" class="button button-ghost">Clear filters</button>
+      </div>
+      <div id="question-list" class="questions"><p class="loading">Loading questions…</p></div>
+      <div id="empty" class="empty" hidden>No questions match these filters. Try another topic or year.</div>
+    </section>
+    <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" hidden>
+      <div class="section-heading"><div><p class="eyebrow orange">PRACTICE MODE</p><h2>Create a four-question exam</h2></div></div>
+      <div class="generator">
+        <div><strong>Four different questions, chosen at random.</strong><p>No duplicates within an exam. History-of-statistics questions are excluded by default.</p></div>
+        <label class="checkline"><input type="checkbox" id="include-history"> Include history-of-statistics questions</label>
+        <button type="button" id="generate" class="button button-primary">↻ &nbsp; Generate four questions</button>
+      </div>
+      <div id="exam-message" class="exam-message" aria-live="polite">Choose “Generate four questions” to create a practice exam.</div>
+      <div id="exam-actions" class="exam-actions" hidden><span id="exam-score"></span><button class="button button-outline" id="print-exam" type="button">Print / Save as PDF</button><button class="button button-ghost" id="copy-exam" type="button">Copy exam link</button></div>
+      <div id="exam-list" class="questions exam-questions"></div>
+    </section>
+    <p class="site-disclaimer">Prototype with six exercises provided in LaTeX. Topic labels are provisional. Exam type has not yet been verified. No solutions are included.</p>
+  </main>
+  <footer class="footer"><div class="wrap footer-row"><strong>ECON 532</strong><span>Study resource · Built for GitHub Pages · No responses or student data collected</span></div></footer>
+</body>
+</html>
