@@ -165,21 +165,15 @@ el('generate').addEventListener('click',()=>{
   window.history.replaceState({},'',url.toString());
   renderExam(ids);
 });
-el('print-exam').addEventListener('click',async()=>{
-  if (generatedIds.length!==4) return;
-  // Avoid opening the print dialog while math or figures are still loading.
-  await typeset(el('exam-list'));
-  const images=[...el('exam-list').querySelectorAll('img')];
-  await Promise.all(images.map(img=>{
-    img.loading='eager';
-    if (img.complete) return Promise.resolve();
-    return new Promise(resolve=>{
-      img.addEventListener('load',resolve,{once:true});
-      img.addEventListener('error',resolve,{once:true});
-    });
-  }));
-  if (document.fonts?.ready) await document.fonts.ready;
-  window.print();
+el('print-exam').addEventListener('click',()=>{
+  if (generatedIds.length !== 4) return;
+  // A dedicated print document prevents any website navigation, tags, or controls
+  // from leaking into the exam. Open synchronously so popup blockers allow it.
+  const url = new URL('./print.html', window.location.href);
+  url.searchParams.set('exam', generatedIds.join(','));
+  url.searchParams.set('autoprint', '1');
+  const win = window.open(url.toString(), '_blank');
+  if (!win) window.location.href = url.toString();
 });
 el('copy-exam').addEventListener('click',async()=>{
   const url=new URL(window.location.href);
