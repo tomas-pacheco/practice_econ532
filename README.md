@@ -1,69 +1,85 @@
-# ECON 532 — Past Exam Question Bank (prototype v1)
+# ECON 532 — Past Final Exam Question Bank (v2)
 
-A static website designed for **GitHub Pages**. It currently contains six exercises from the LaTeX excerpt supplied by the TA (the questions refer to Fall 2016). Nothing is uploaded or saved when a student browses or generates an exam.
+Static website for GitHub Pages, based on the final-exam LaTeX supplied by the TA.
 
-## Features
+## Content
 
-- Search questions by keyword, filter by **topic** and **year**.
-- Open full question text, mathematical formulas, tables, and a recreated scatterplot for Question 2.
-- Generate **four unique random questions** and print or save as a PDF using the browser's print dialog.
-- Share the exact four-question exam using **Copy exam link** (the question IDs are encoded in the URL).
-- The History of Statistics exercise (Q6) is excluded from the random pool by default; students can include it with a checkbox.
-- Responsive layout inspired by the colors of the University of Illinois.
+- **148 final-exam questions** from **23 available years (1994–2025)**. Not every calendar year has an exam in this archive.
+- **Workout Examples III and IV are entirely excluded**, including from the published LaTeX source.
+- **106 questions** have one or more labels from Chapters **9–15**, exactly as marked red in the original LaTeX; **42 questions** have no chapter classification.
+- Questions without a chapter label **appear in the full archive and year-filtered lists**, but **do not appear when a chapter filter is applied**.
+- The original year, Part A/Part B, question number, point labels, printed answer-to-grade text, and source statements have been retained. Some years have repeated question numbers in different parts (or within the same part), so stable unique IDs are used.
+- The six 2016 question IDs (`2016-q01` through `2016-q06`) are unchanged from v1, keeping previously shared practice-exam links valid.
+
+## Images
+
+Copy source images into the **`images/`** folder using the **exact filenames** in [`images/IMAGE_MANIFEST.csv`](images/IMAGE_MANIFEST.csv).
+
+For example:
+
+```text
+images/2025_q3.png
+images/2017_q4_cartoons.png
+images/2015_q3_expected.png
+images/2015_q3_observed.png
+```
+
+The HTML automatically references the expected filenames. Until you add an image, that question displays a useful **"Image not yet added"** notice (instead of a broken-image icon). For 2016 Q2 the recreated grade scatterplot from v1 is shown as a fallback until you provide `images/2016_q2.png`.
+
+You can copy images to GitHub by going to the repository's `images/` directory and uploading files there, then committing. GitHub Pages serves them using relative paths. Keep extensions and capitalization unchanged.
+
+### Note about incomplete figures
+
+Some exams cannot be solved from their text alone without the original image (for example, 2025 Q3, the needles experiment). Add relevant images **before** directing students to those questions. The site does not invent or recreate unavailable illustrations.
 
 ## Files
 
 ```text
-index.html                   main page
-styles.css                   layout and printing
-app.js                       search, filters, random generator and plot rendering
-data/questions.json          the six exercises and topic tags
-data/grades-2016.json        coordinates and regression line for Q2
-originals/2016_exercises.tex original LaTeX from the TA
- topics-to-review.csv         provisional taxonomy for TA review
+index.html                      main website and filters
+app.js                          question browsing and four-question random generator
+styles.css                      existing UI styles + LaTeX-import support
+data/questions.json             full question database (148)
+data/chapters.json              fixed taxonomy (chapters 9–15)
+data/grades-2016.json           chart data for 2016 Q2 fallback
+data/question_index.csv         quick inventory of question metadata
+images/IMAGE_MANIFEST.csv       exactly 12 images to insert
+images/.gitkeep                 keeps empty images folder in Git
+originals/past_finals_only.tex  transcribed finals only, without workouts
 ```
 
-(The lines with spaces above denote regular paths without the leading symbols.)
+## Publish as an update to your existing GitHub Pages site
 
-## Publish using GitHub Pages
+1. **Back up** your current repository, or create a new branch before replacing files.
+2. Upload the **contents** of this folder to the repository's root (`index.html`, `app.js`, `styles.css`, `data/`, `images/`), **not the ZIP itself**.
+3. **Replace** `index.html`, `app.js`, `styles.css` and `data/questions.json`, and **add** `data/chapters.json`, `images/`, and the other files in this bundle.
+4. Commit changes. Your configured GitHub Pages site will deploy automatically.
+5. Open the site and check **2016 Final**, **Chapter 15**, an **unclassified question by year**, and the **Generate four questions** action.
 
-1. Create a **public** repository, e.g. `econ532-question-bank`, after checking with the instructor that the past exam questions may be distributed publicly.
-2. Upload **the contents of this folder**, including `index.html` at the root, `styles.css`, `app.js`, `data/`, and (if desired) `originals/`.
-3. In the repository open **Settings → Pages**.
-4. Set **Build and deployment → Source: Deploy from a branch**; choose **main** and **/(root)**, and save.
-5. GitHub provides a website URL such as `https://your-username.github.io/econ532-question-bank/`.
-
-The site is 100% static. No login, Google account, API key, or database is required. Mathematical notation loads from **MathJax v4** over a public CDN, so an internet connection is required to render math notation beautifully.
+The website remains static. No backend, database, login or Google account is needed. MathJax v4 is loaded from a public CDN, so internet access is needed for rendered mathematics.
 
 ## Preview locally
 
-Because browser security typically prevents `fetch()` from reading local JSON via `file://`, serve this folder from a terminal:
+Opening `index.html` directly using `file://` often prevents JSON loading. Use a local web server instead:
 
 ```bash
-cd econ532-question-bank-v1
+cd econ532-question-bank-v2
 python3 -m http.server 8000
 ```
 
-Open <http://localhost:8000>.
+Then visit `http://localhost:8000`.
 
-## Adding questions
+## Editing and updating the data
 
-1. Edit `data/questions.json` and add a record. Give it a **unique** `id` (`2020-midterm-q03`), `year`, `number`, `title`, `points`, `points_label`, `topics` (array), and `body` (HTML containing math as `\\( ... \\)` or `\\[ ... \\]`).
-2. Set `include_in_random` to `true` for practice questions, or `false` for optional/unusual exercises.
-3. Existing exam links will continue to work as long as existing question IDs are kept unchanged.
-4. To add a custom chart, implement its renderer in `app.js` or include an image or SVG asset.
+- Each record has `id`, `year`, `exam`, `part`, `number`, `points`, `chapters`, `body` (HTML + MathJax), `latex`, and `images`.
+- **Keep existing `id` values** unchanged so previously generated practice-exam links continue to work.
+- Use `chapters: []` for unclassified questions. Don't infer categories not explicitly assigned in the LaTeX.
+- The source and page display do not include question solutions. Some original *questions* include a sample answer the student is asked to grade; these are part of the prompt, not answer keys.
+- Random-exam generation selects 4 distinct questions, including uncategorized items; obvious history/reflection questions are excluded by default, with an opt-in checkbox.
 
-The question texts were manually adapted from LaTeX to web HTML; the separate `.tex` source is preserved to avoid losing the original. LaTeX tables and `pgfplots`/TikZ cannot be interpreted directly by MathJax. For Q2, the scatterplot is reproduced from all 38 coordinate pairs and the given straight-line equation. We did not invent solutions.
+## Quality notes
 
-## Metadata still to review
-
-- **Exam type**: the supplied file has no cover page or metadata confirming **Final**. It mentions *Fall 2016*, but we have marked `exam: "To confirm"`. The TA should confirm the exam type before putting the site online.
-- **Topic labels** are proposals. Review `topics-to-review.csv` and edit `data/questions.json`.
-- **Q2 source inconsistency:** The table in the supplied LaTeX reports `Mean(Y) = 6.01`, whereas the 38 listed Y values average to **6.00**. The site intentionally preserves **6.01** exactly as provided. Please verify this with the source before publication.
-- **Scope and permissions**: If future exams or answer keys are not approved for public distribution, do not commit them to a public repository. GitHub Pages files are publicly accessible.
-
-## Limitations
-
-- The generated exam is a random practice set, not a calibrated 100-point exam. The four selected questions can have different total points.
-- Student answers and progress are **not** collected or saved, and no solutions are currently published.
-- New questions require editing static JSON and committing the changes to GitHub; there is no administrative form yet.
+- Many originals include apparent notation/typographical issues. Their mathematical content has not been silently corrected; please verify ambiguous questions against the PDFs before assigning them.
+- Source `2016 Final Q2` lists an observed-grade mean of `6.01`; its 38 individual values average to `6.00`. We preserve the supplied table value for fidelity.
+- Some long tables and printed proofs are translated into scrollable HTML. Rendering of mathematical formulas relies on MathJax.
+- Confirm that the instructor permits distribution of historical exam questions and attached third-party images/articles before publishing.
+- A private GitHub repository does not by itself make the Pages site or its question data private.

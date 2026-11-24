@@ -1,0 +1,149 @@
+id,source,part,question,points,chapters,images,title
+2025-q01,2025 Final,,1,20,,,A blast from the past. This question is from the materials right before the mid-term exam. Spatial connections in the space of distributions.
+2025-q02,2025 Final,,2,10,,,Personalities from Probability and Statistics
+2025-q03,2025 Final,,3,30,14,images/2025_q3.png,"Estimating and Testing, Something Unnecessary!"
+2025-q04,2025 Final,,4,30,12,,"Remembering very old but useful friends, sample mean and sample variance"
+2025-q05,2025 Final,,5,10,15,,"What happens when you Zzz.., while you should be drinking t !"
+2018-q01,2018 Final,,1,35,11,,Let us start with an unusual way: By grading.
+2018-q02,2018 Final,,2,10,,,Still unusual. A surprise visit.
+2018-q03,2018 Final,,3,20,15,,Connecting Estimation and Testing.
+2018-q04,2018 Final,,4,25,15,,"Mother and her children, and more..."
+2018-q05,2018 Final,,5,10,15,,From your great experiment.
+2017-q01,2017 Final,,1,25,9,,Let us start with business as normal
+2017-q02,2017 Final,,2,15,10,,Asymptotics
+2017-q03,2017 Final,,3,30,14,,Some theory
+2017-q04,2017 Final,,4,25,15,images/2017_q4_cartoons.png,On God's result: Neyman-Pearson Theory
+2017-q05,2017 Final,,5,10,,,Personalities in Statistics
+2017-q06,2017 Final,,6,,,,Reliability of This Exam
+2016-q01,2016 Final,,1,10,15,,Looking back
+2016-q02,2016 Final,,2,20,15,images/2016_q2.png,The Great Expectations
+2016-q03,2016 Final,,3,25,"10,13",,Asymptotics
+2016-q04,2016 Final,,4,30,14,,Some theory
+2016-q05,2016 Final,,5,15,15,,Testing/Tasting
+2016-q06,2016 Final,,6,10,,,Some Leading Personalities in Statistics who Influenced our Econ 532
+2015-q01,2015 Final,,1,15,,,A helicopter tour of estimation and testing
+2015-q02,2015 Final,,2,30,"9,15",,Some theory
+2015-q03,2015 Final,,3,25,15,images/2015_q3_expected.png;images/2015_q3_observed.png,Manpower or womanpower?
+2015-q04,2015 Final,,4,10,10,,A little more theory
+2015-q05,2015 Final,,5,20,14,,Yet more theory
+2015-q06,2015 Final,,6,10,13,,Sufficiency is sufficient
+2014-q01,2014 Final,,1,5,,,Prologue: The Fundamental Question
+2014-q02,2014 Final,,2,30,9,,Our Old Friends: Mean and Variance
+2014-q03,2014 Final,,3,10,10,,A Little Theory
+2014-q04,2014 Final,,4,25,14,images/2014_q4_article_1.png;images/2014_q4_article_2.png;images/2014_q4_article_3.png,Stats on Rats
+2014-q05,2014 Final,,5,20,14,,A Little More Theory
+2014-q06,2014 Final,,6,10,15,,``Testing'' the Tests
+2014-q07,2014 Final,,7,10,,,Epilogue: Closing the Course with a ``Bright'' Note
+2013-q01,2013 Final,,1,15,9,,Question 1
+2013-q02,2013 Final,,2,15,,,Question 2
+2013-q03,2013 Final,,3,20,15,,Question 3
+2013-q04,2013 Final,,4,15,13,,Question 4
+2013-q05,2013 Final,,5,15,15,images/2013_q5.png,Question 5
+2013-q06,2013 Final,,6,20,15,,Question 6
+2012-q01,2012 Final,,1,15,9,,Question 1
+2012-q02,2012 Final,,2,35,12,,Question 2
+2012-q03,2012 Final,,3,15,13,,Question 3
+2012-q04,2012 Final,,4,20,15,,Question 4
+2012-q05,2012 Final,,5,10,,,Question 5
+2012-q06,2012 Final,,6,5,,,Question 6
+2009-q01,2009 Final,,1,20,11,,Question 1
+2009-q02,2009 Final,,2,35,11,,Question 2
+2009-q03,2009 Final,,3,20,15,,Question 3
+2009-q04,2009 Final,,4,25,15,images/2009_q4.png,Question 4
+2008-q01,2008 Final,,1,30,9,,Question 1
+2008-q02,2008 Final,,2,35,15,images/2008_q2.png,Question 2
+2008-q03,2008 Final,,3,25,10,,Question 3
+2008-q04,2008 Final,,4,15,11,,Question 4
+2007-q01,2007 Final,,1,30,9,,Question 1
+2007-q02,2007 Final,,2,10,10,,Question 2
+2007-q03,2007 Final,,3,25,11,,Question 3
+2007-repeat1-q04,2007 Final,,4,10,15,,Question 4
+2007-repeat2-q04,2007 Final,,4,25,15,,Question 4
+2006-a-q01,2006 Final,A,1,5,,,Question 1
+2006-a-q02,2006 Final,A,2,5,,,Question 2
+2006-a-q03,2006 Final,A,3,5,,,Question 3
+2006-b-q01,2006 Final,B,1,25,10,,Question 1
+2006-b-q02,2006 Final,B,2,20,14,,Question 2
+2006-b-q03,2006 Final,B,3,,15,,Question 3
+2006-b-q04,2006 Final,B,4,25,15,,Question 4
+2005-a-q01,2005 Final,A,1,5,,,Question 1
+2005-a-q02,2005 Final,A,2,5,,,Question 2
+2005-b-q01,2005 Final,B,1,25,9,,Question 1
+2005-b-q02,2005 Final,B,2,25,11,,Question 2
+2005-b-q03,2005 Final,B,3,35,14,,Question 3
+2005-b-q04,2005 Final,B,4,15,15,,Question 4
+2004-a-q01,2004 Final,A,1,10,,,Question 1
+2004-a-q02,2004 Final,A,2,10,,,Question 2
+2004-b-q01,2004 Final,B,1,15,11,,Question 1
+2004-b-q02,2004 Final,B,2,20,14,images/2004_q2.png,Question 2
+2004-b-q03,2004 Final,B,3,40,15,,Question 3
+2004-b-q04,2004 Final,B,4,20,11,,Question 4
+2002-a-q01,2002 Final,A,1,10,,,Question 1
+2002-a-q02,2002 Final,A,2,10,,,Question 2
+2002-b-q01,2002 Final,B,1,20,,,Question 1
+2002-b-q02,2002 Final,B,2,20,11,,Question 2
+2002-b-q03,2002 Final,B,3,30,15,,Question 3
+2002-b-q04,2002 Final,B,4,20,13,,Question 4
+2001-a-q01,2001 Final,A,1,10,,,Question 1
+2001-a-q02,2001 Final,A,2,5,,,Question 2
+2001-a-q03,2001 Final,A,3,5,,,Question 3
+2001-b-q01,2001 Final,B,1,35,10,,Question 1
+2001-b-q02,2001 Final,B,2,15,15,,Question 2
+2001-b-q03,2001 Final,B,3,20,15,,Question 3
+2001-b-q04,2001 Final,B,4,10,11,,Question 4
+2000-a-q01,2000 Final,A,1,5,,,Question 1
+2000-a-q02,2000 Final,A,2,5,,,Question 2
+2000-a-q03,2000 Final,A,3,5,,,Question 3
+2000-b-q01,2000 Final,B,1,20,11,,Question 1
+2000-b-q02,2000 Final,B,2,10,15,,Question 2
+2000-b-q03,2000 Final,B,3,40,15,,Question 3
+2000-b-q04,2000 Final,B,4,25,14,,Question 4
+2000-b-q05,2000 Final,B,5,10,15,,Question 5
+1999-a-q01,1999 Final,A,1,5,,,Question 1
+1999-a-q02,1999 Final,A,2,10,,,Question 2
+1999-b-q01,1999 Final,B,1,25,13,,Question 1
+1999-b-q02,1999 Final,B,2,20,9,,Question 2
+1999-b-q03,1999 Final,B,3,15,15,,Question 3
+1999-b-q04,1999 Final,B,4,15,10,,Question 4
+1999-b-q05,1999 Final,B,5,20,14,,Question 5
+1999-b-q06,1999 Final,B,6,10,15,,Question 6
+1998-a-q01,1998 Final,A,1,10,,,Question 1
+1998-a-q02,1998 Final,A,2,5,,,Question 2
+1998-b-q01,1998 Final,B,1,20,9,,Question 1
+1998-b-q02,1998 Final,B,2,15,10,,Question 2
+1998-b-q03,1998 Final,B,3,20,13,,Question 3
+1998-b-q04,1998 Final,B,4,25,15,,Question 4
+1998-b-q05,1998 Final,B,5,20,15,,Question 5
+1998-b-q06,1998 Final,B,6,5,11,,Question 6
+1997-a-q01,1997 Final,A,1,5,,,Question 1
+1997-a-q02,1997 Final,A,2,5,,,Question 2
+1997-b-q01,1997 Final,B,1,25,9,,Question 1
+1997-b-q02,1997 Final,B,2,20,15,,Question 2
+1997-b-q03,1997 Final,B,3,10,11,,Question 3
+1997-b-q04,1997 Final,B,4,25,14,,Question 4
+1997-b-q05,1997 Final,B,5,20,15,,Question 5
+1997-b-q06,1997 Final,B,6,10,13,,Question 6
+1996-a-q01,1996 Final,A,1,10,,,Question 1
+1996-a-q02,1996 Final,A,2,5,,,Question 2
+1996-b-q01,1996 Final,B,1,15,14,,Question 1
+1996-b-q02,1996 Final,B,2,10,15,,Question 2
+1996-b-q03,1996 Final,B,3,30,15,,Question 3
+1996-b-q04,1996 Final,B,4,30,11,,Question 4
+1996-b-q05,1996 Final,B,5,10,15,,Question 5
+1996-b-q06,1996 Final,B,6,10,15,,Question 6
+1995-a-q01,1995 Final,A,1,10,,,Question 1
+1995-a-q02,1995 Final,A,2,5,,,Question 2
+1995-a-q03,1995 Final,A,3,5,,,Question 3
+1995-b-q01,1995 Final,B,1,10,12,,Question 1
+1995-b-q02,1995 Final,B,2,20,14,,Question 2
+1995-b-q03,1995 Final,B,3,30,15,,Question 3
+1995-b-q04,1995 Final,B,4,30,10,,Question 4
+1995-b-q05,1995 Final,B,5,10,15,,Question 5
+1994-a-q01,1994 Final,A,1,5,,,Question 1
+1994-a-q02,1994 Final,A,2,5,,,Question 2
+1994-a-q03,1994 Final,A,3,10,,,Question 3
+1994-b-q01,1994 Final,B,1,40,13,,Question 1
+1994-b-q02,1994 Final,B,2,20,14,,Question 2
+1994-b-q03,1994 Final,B,3,20,15,,Question 3
+1994-b-q04,1994 Final,B,4,10,15,,Question 4
+1994-b-q05,1994 Final,B,5,10,11,,Question 5
