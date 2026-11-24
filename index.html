@@ -52,12 +52,15 @@
     <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" hidden>
       <div class="section-heading"><div><p class="eyebrow orange">PRACTICE MODE</p><h2>Create a four-question exam</h2></div></div>
       <div class="generator">
-        <div><strong>Four different questions, chosen at random.</strong><p>No duplicates within an exam. History-of-statistics questions are excluded by default; questions without chapter labels can still appear.</p></div>
-        <label class="checkline"><input type="checkbox" id="include-history"> Include history-of-statistics questions</label>
+        <div><strong>Four different questions, chosen at random.</strong><p>No duplicates within an exam. History/reflection questions are excluded; other unclassified questions can still appear.</p></div>
         <button type="button" id="generate" class="button button-primary">↻ &nbsp; Generate four questions</button>
       </div>
       <div id="exam-message" class="exam-message" aria-live="polite">Choose “Generate four questions” to create a practice exam.</div>
       <div id="exam-actions" class="exam-actions" hidden><span id="exam-score"></span><button class="button button-outline" id="print-exam" type="button">Print / Save as PDF</button><button class="button button-ghost" id="copy-exam" type="button">Copy exam link</button></div>
+      <!-- The following header is shown only in the printable exam, not on the website. -->
+      <div id="print-exam-header" class="print-only exam-print-header" aria-hidden="true">
+        <h1>ECON 532 - Practice Final Examination</h1>
+      </div>
       <div id="exam-list" class="questions exam-questions"></div>
     </section>
     <p class="site-disclaimer">Final-exam archive, 1994–2025 (available years only). Chapters follow the labels provided in the source LaTeX. Unclassified questions remain visible when browsing by year. No solutions are included.</p>

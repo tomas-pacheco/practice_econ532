@@ -1,6 +1,22 @@
-# ECON 532 — Past Final Exam Question Bank (v2)
+# ECON 532 — Past Final Exam Question Bank (v2.1: math rendering fix)
 
 Static website for GitHub Pages, based on the final-exam LaTeX supplied by the TA.
+
+## Math rendering fix (November 24, 2026)
+
+The **data/questions.json** file in this release corrects HTML encoding in the question
+statements, including literal mathematical `<`, `>` and `&` characters that were
+being interpreted as HTML instead of TeX. It also removes 22 unclosed layout tags
+and makes four equation labels compatible with MathJax's `aligned` environment.
+
+**To patch a site already running v2, replace only `data/questions.json`.** All
+question IDs, titles, point values, chapter tags, source LaTeX, image paths, and
+exam-generator logic are unchanged. No changes to `index.html`, `app.js`, or
+`styles.css` are needed for this fix. Refresh the site after GitHub Pages deploys;
+if you still see the old broken display, hard-refresh to bypass cached data.
+
+The mathematical expressions (1,258 in total) were checked using a local MathJax
+compiler, and representative questions were rendered successfully in a browser.
 
 ## Content
 
@@ -74,7 +90,7 @@ Then visit `http://localhost:8000`.
 - **Keep existing `id` values** unchanged so previously generated practice-exam links continue to work.
 - Use `chapters: []` for unclassified questions. Don't infer categories not explicitly assigned in the LaTeX.
 - The source and page display do not include question solutions. Some original *questions* include a sample answer the student is asked to grade; these are part of the prompt, not answer keys.
-- Random-exam generation selects 4 distinct questions, including uncategorized items; obvious history/reflection questions are excluded by default, with an opt-in checkbox.
+- Random-exam generation selects 4 distinct questions, including uncategorized items; history/reflection questions are excluded, with no opt-in checkbox.
 
 ## Quality notes
 
@@ -83,3 +99,38 @@ Then visit `http://localhost:8000`.
 - Some long tables and printed proofs are translated into scrollable HTML. Rendering of mathematical formulas relies on MathJax.
 - Confirm that the instructor permits distribution of historical exam questions and attached third-party images/articles before publishing.
 - A private GitHub repository does not by itself make the Pages site or its question data private.
+
+
+## Correction: stray Part B headings (November 24, 2026)
+
+Removed accidental Part B section titles and their generic instructions from the **end** of 12 Part A questions in older exams, both in the rendered `body` field and stored `latex` field. These are not part of the question. The Part A / Part B metadata and genuine subparts (e.g., 2018 Final Q1) are unchanged.
+
+Updated question IDs: `2006-a-q03`, `2005-a-q02`, `2004-a-q02`, `2002-a-q02`, `2001-a-q03`, `2000-a-q03`, `1999-a-q02`, `1998-a-q02`, `1997-a-q02`, `1996-a-q02`, `1995-a-q03`, `1994-a-q03`.
+For an existing published website, replace only `data/questions.json` and commit.
+
+## Professional print layout (November 24, 2026)
+
+The **Print / Save as PDF** button in the practice-exam generator uses a dedicated
+**US Letter** print layout: university and department heading, exam title, name/date
+line, numbered questions with original point allocations and source references,
+MathJax math, HTML tables, and original figures when available. Navigation, colored
+cards, controls, and site branding are hidden from print.
+
+The browser's native Print dialog can print to paper or **Save as PDF**. Students
+never receive LaTeX source code. The website remains static on GitHub Pages.
+
+**To update an existing website**, replace `index.html`, `app.js`,
+`styles.css`, and `data/questions.json`; preserve any images you already added.
+The `questions.json` content remains 148 records with unchanged IDs, math,
+chapters, and question statements. A few historical/reflection questions are
+now excluded from random exams but are still browsable in the archive.
+
+For a clean PDF, turn off browser **headers and footers** and background graphics
+in the print dialog if the browser adds its own URL/date headers. Recommended
+paper: Letter, Portrait. If a selected question requires an image that has not
+yet been added to `images/`, the printed exam may indicate a missing figure;
+add those source figures before distributing exams.
+
+## Simplified practice-exam print header
+
+The printed exam begins with the single heading **ECON 532 - Practice Final Examination**. The former university/department lines, subtitle, name/date fields, and instructions have been removed. The website's regular appearance and all questions are unchanged. To update your existing GitHub Pages deployment, replace `index.html`, `styles.css`, and `app.js`; no JSON update is needed.

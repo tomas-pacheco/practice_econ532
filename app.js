@@ -30,9 +30,10 @@ function makeCard(q, expanded=false, isExam=false, position=0) {
   const tags=q.chapters.map(n=>`<span class="tag" title="${escapeHtml(chapterNames[n]||'')}">Chapter ${n}</span>`).join('');
   const pointLabel=q.points_label ? `<span class="pill points">[${escapeHtml(q.points_label)}] points</span>` : '';
   const location=q.part ? `<span class="pill">Part ${q.part}</span>` : '';
-  return `<article class="question-card" data-id="${escapeHtml(q.id)}">
+  const printLabel = isExam ? `<div class="print-only print-question-heading"><div class="print-question-number">Question ${position+1}${q.points_label?` <span class="print-question-points">[${escapeHtml(q.points_label)} points]</span>`:''}</div><div class="print-question-source">Source: ${escapeHtml(q.year)} Final${q.part?`, Part ${escapeHtml(q.part)}`:''}, Q${escapeHtml(q.number)}</div></div>` : '';
+  return `<article class="question-card" data-id="${escapeHtml(q.id)}">${printLabel}
     <div class="question-head"><div class="q-left"><div class="q-meta"><span class="pill year">${q.year} Final</span>${location}<span class="pill">Q${q.number}</span>${pointLabel}${isExam?`<span class="pill">Practice question ${position+1}</span>`:''}</div>
-    <h3 class="q-title">${escapeHtml(q.title)}</h3><div class="tags">${tags}</div></div>
+    <h3 class="q-title${/^Question\s+\d+$/i.test(q.title.trim())?' generic-question-title':''}">${escapeHtml(q.title)}</h3><div class="tags">${tags}</div></div>
     ${isExam?'':`<button type="button" class="button button-outline expand" aria-expanded="${expanded}">${expanded?'Hide question':'View question'}</button>`}</div>
     <div class="question-body" ${expanded?'':'hidden'}>${q.body}</div></article>`;
 }
@@ -156,7 +157,7 @@ el('tab-exam').addEventListener('click',()=>selectTab('exam'));
 ['query','topic','year'].forEach(id=>el(id).addEventListener(id==='query'?'input':'change',renderBank));
 el('reset').addEventListener('click',()=>{el('query').value='';el('topic').value='';el('year').value='';renderBank();});
 el('generate').addEventListener('click',()=>{
-  const pool=questions.filter(q=>q.include_in_random||el('include-history').checked);
+  const pool=questions.filter(q=>q.include_in_random);
   if(pool.length<4){el('exam-message').hidden=false;el('exam-message').textContent='Need at least four eligible questions.';return;}
   const ids=shuffle(pool).slice(0,4).map(q=>q.id);
   const url=new URL(window.location.href);
@@ -164,7 +165,22 @@ el('generate').addEventListener('click',()=>{
   window.history.replaceState({},'',url.toString());
   renderExam(ids);
 });
-el('print-exam').addEventListener('click',()=>window.print());
+el('print-exam').addEventListener('click',async()=>{
+  if (generatedIds.length!==4) return;
+  // Avoid opening the print dialog while math or figures are still loading.
+  await typeset(el('exam-list'));
+  const images=[...el('exam-list').querySelectorAll('img')];
+  await Promise.all(images.map(img=>{
+    img.loading='eager';
+    if (img.complete) return Promise.resolve();
+    return new Promise(resolve=>{
+      img.addEventListener('load',resolve,{once:true});
+      img.addEventListener('error',resolve,{once:true});
+    });
+  }));
+  if (document.fonts?.ready) await document.fonts.ready;
+  window.print();
+});
 el('copy-exam').addEventListener('click',async()=>{
   const url=new URL(window.location.href);
   url.searchParams.set('exam',generatedIds.join(','));
