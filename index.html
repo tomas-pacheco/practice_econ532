@@ -6,7 +6,7 @@
   <meta name="description" content="Browse and practice ECON 532 past-exam questions by year and topic.">
   <meta name="theme-color" content="#13294b">
   <title>ECON 532 | Past Exam Question Bank</title>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=8.1">
   <script>
     window.MathJax = {
       tex: {inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']]},
@@ -15,7 +15,7 @@
     };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
-  <script defer src="./app.js"></script>
+  <script defer src="./app.js?v=9.0"></script>
 </head>
 <body>
   <header class="site-header">
@@ -61,6 +61,13 @@
         </div>
         <div class="chapter-options" id="chapter-options" role="group" aria-label="Select chapters">
           <button class="chapter-chip is-selected" id="chapters-all" type="button" aria-pressed="true">All eligible questions</button>
+          <button class="chapter-chip" type="button" data-chapter="9" aria-pressed="false">Chapter 9</button>
+          <button class="chapter-chip" type="button" data-chapter="10" aria-pressed="false">Chapter 10</button>
+          <button class="chapter-chip" type="button" data-chapter="11" aria-pressed="false">Chapter 11</button>
+          <button class="chapter-chip" type="button" data-chapter="12" aria-pressed="false">Chapter 12</button>
+          <button class="chapter-chip" type="button" data-chapter="13" aria-pressed="false">Chapter 13</button>
+          <button class="chapter-chip" type="button" data-chapter="14" aria-pressed="false">Chapter 14</button>
+          <button class="chapter-chip" type="button" data-chapter="15" aria-pressed="false">Chapter 15</button>
         </div>
         <p class="chapter-pool-status" id="chapter-pool-status" aria-live="polite"></p>
       </div>

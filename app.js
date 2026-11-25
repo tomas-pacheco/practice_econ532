@@ -2,9 +2,19 @@
 
 let questions = [];
 let gradeData = null;
-let chapterNames = {};
+// Keep the chapter selector functional even if an optional metadata file is missing.
+const defaultChapterNames = {
+  9: 'Sample Distribution of X̄ and S′²: Normal Population',
+  10: 'Asymptotic Theory',
+  11: 'Estimation I',
+  12: 'Estimation II',
+  13: 'Estimation III',
+  14: 'MLE, MM',
+  15: 'Hypothesis Testing'
+};
+let chapterNames = {...defaultChapterNames};
 let generatedIds = [];
-const selectedChapters = new Set(); // Empty means all eligible questions, including unclassified questions.
+const selectedChapters = new Set(); // Empty means all eligible, chapter-classified questions.
 
 const el = id => document.getElementById(id);
 const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -84,7 +94,10 @@ function updateYearPrintOption() {
 }
 
 function eligibleRandomQuestions() {
+  // Only chapter-classified questions are part of the random-exam pool.
+  // Questions without a chapter remain available in the year-by-year archive.
   return questions.filter(q=>q.include_in_random &&
+    Array.isArray(q.chapters) && q.chapters.length>0 &&
     (selectedChapters.size===0 || q.chapters.some(n=>selectedChapters.has(n))));
 }
 
@@ -99,28 +112,40 @@ function updateChapterSelection() {
   const n=eligibleRandomQuestions().length;
   const status=el('chapter-pool-status');
   status.textContent= n<4 ? `${n} eligible question${n===1?'':'s'}. Select another chapter to reach four.` :
-    `${n} eligible questions${selectedChapters.size===0?' (including unclassified questions)':''}`;
+    `${n} eligible questions`;
   status.classList.toggle('warning',n<4);
   el('generate').disabled=n<4;
 }
 
 function buildChapterSelector() {
+  const container = el('chapter-options');
+  // Initial chapters are already in HTML. Insert only truly new chapters,
+  // so a slow or cached script cannot leave the selector visually empty.
   Object.entries(chapterNames).sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([n,name])=>{
-    const button=document.createElement('button');
-    button.type='button';
-    button.className='chapter-chip';
-    button.dataset.chapter=n;
+    let button=container.querySelector(`[data-chapter="${n}"]`);
+    if(!button){
+      button=document.createElement('button');
+      button.type='button';
+      button.className='chapter-chip';
+      button.dataset.chapter=n;
+      button.textContent=`Chapter ${n}`;
+      button.setAttribute('aria-pressed','false');
+      container.appendChild(button);
+    }
     button.title=name;
-    button.textContent=`Chapter ${n}`;
-    button.setAttribute('aria-pressed','false');
-    button.addEventListener('click',()=>{
-      const value=Number(n);
-      if(selectedChapters.has(value))selectedChapters.delete(value);else selectedChapters.add(value);
-      updateChapterSelection();
-    });
-    el('chapter-options').appendChild(button);
   });
-  el('chapters-all').addEventListener('click',()=>{selectedChapters.clear();updateChapterSelection();});
+  container.addEventListener('click',event=>{
+    const button=event.target.closest('button[data-chapter]');
+    if(!button || !container.contains(button))return;
+    const number=Number(button.dataset.chapter);
+    if(selectedChapters.has(number))selectedChapters.delete(number);
+    else selectedChapters.add(number);
+    updateChapterSelection();
+  });
+  el('chapters-all').addEventListener('click',()=>{
+    selectedChapters.clear();
+    updateChapterSelection();
+  });
   updateChapterSelection();
 }
 
@@ -178,13 +203,24 @@ async function renderExam(ids) {
 
 async function init() {
   try {
-    const responses=await Promise.all([
-      fetch('./data/questions.json'),
-      fetch('./data/grades-2016.json'),
-      fetch('./data/chapters.json')
+    // Only the question database is required. The other two JSON files
+    // enrich the page, but cannot prevent chapter selection from loading.
+    const [questionsResponse, gradesResponse, chaptersResponse]=await Promise.all([
+      fetch('./data/questions.json?v=8.1'),
+      fetch('./data/grades-2016.json').catch(()=>null),
+      fetch('./data/chapters.json').catch(()=>null)
     ]);
-    if(responses.some(r=>!r.ok))throw new Error('Missing JSON data');
-    [questions,gradeData,chapterNames]=await Promise.all(responses.map(r=>r.json()));
+    if(!questionsResponse.ok)throw new Error('Missing questions.json');
+    questions=await questionsResponse.json();
+    if(gradesResponse?.ok)gradeData=await gradesResponse.json();
+    if(chaptersResponse?.ok){
+      chapterNames={...defaultChapterNames, ...await chaptersResponse.json()};
+    }
+    // Make sure any new chapters present in questions can be selected,
+    // even if their chapter description has not yet been written.
+    questions.flatMap(q=>q.chapters||[]).forEach(n=>{
+      if(!(n in chapterNames))chapterNames[n]=`Chapter ${n}`;
+    });
     // Students selecting a chapter see tagged questions only; year-only browsing includes all.
     Object.entries(chapterNames).sort((a,b)=>Number(a[0])-Number(b[0]))
       .forEach(([n,name])=>el('topic').add(new Option(`Chapter ${n} — ${name}`,n)));
@@ -209,6 +245,8 @@ async function init() {
   } catch(err) {
     el('question-list').innerHTML='<p class="loading">Unable to load the question bank. To preview locally, serve this folder with a local web server; see README.md.</p>';
     el('bank-count').textContent='Data unavailable';
+    el('chapter-pool-status').textContent='Question data could not be loaded. Please refresh this page.';
+    el('generate').disabled=true;
     console.error(err);
   }
 }
