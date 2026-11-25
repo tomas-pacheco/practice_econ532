@@ -68,7 +68,7 @@
    ------------------------------------------------------------- */
 .brand-mark{display:inline-flex;align-items:center;justify-content:center;flex:0 0 42px;min-width:42px;height:48px;text-decoration:none}
 .brand-logo{width:39px;height:45px;object-fit:contain;display:block}
-.hero-graphic{right:5px;top:5px;width:min(43%,475px);height:auto;opacity:.33;z-index:1;align-self:auto}
+.hero-graphic{right:12px;top:26px;width:min(39%,410px);height:auto;opacity:.31;z-index:1;align-self:auto}
 .hero-graphic img{width:100%;height:auto;display:block;user-select:none}
 .hero>div:first-child{position:relative;z-index:2}
 .hero .intro{margin-bottom:0}
@@ -78,5 +78,5 @@
 .footer-row{padding-bottom:15px}
 .footer-disclaimer{border-top:1px solid rgba(215,231,249,.15);padding-top:12px;padding-bottom:22px;font-size:12px;line-height:1.65;color:#b5c4d7}
 .footer-disclaimer strong{color:#e1eaf4;font-weight:750}
-@media(max-width:860px){.hero-graphic{right:-55px;width:53%;top:20px;opacity:.19}}
-@media(max-width:560px){.brand-mark{flex-basis:36px;min-width:36px;height:42px}.brand-logo{width:34px;height:40px}.hero-graphic{right:-116px;width:75%;top:50px;opacity:.11}.hero .intro{max-width:620px}.footer-row{align-items:flex-start}}
+@media(max-width:860px){.hero-graphic{right:-28px;width:50%;top:28px;opacity:.23}}
+@media(max-width:560px){.brand-mark{flex-basis:36px;min-width:36px;height:42px}.brand-logo{width:34px;height:40px}.hero-graphic{right:-92px;width:73%;top:72px;opacity:.14}.hero .intro{max-width:620px}.footer-row{align-items:flex-start}}
