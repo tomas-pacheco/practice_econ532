@@ -20,7 +20,7 @@
 <body>
   <header class="site-header">
     <div class="topbar wrap">
-      <div class="brand"><span class="brand-i" aria-hidden="true">I</span><span><strong>ILLINOIS / ECON 532</strong><small>Past Exam Question Bank</small></span></div>
+      <div class="brand"><a class="brand-mark" href="https://illinois.edu/" target="_blank" rel="noopener noreferrer" aria-label="University of Illinois Urbana-Champaign"><img class="brand-logo" src="https://cdn.brand.illinois.edu/logos/block-i/orange-and-white.svg" width="40" height="44" alt="University of Illinois Block I"></a><span><strong>ILLINOIS / ECON 532</strong><small>Past Exam Question Bank</small></span></div>
       <span class="header-note">ANIL K. BERA · QUESTION ARCHIVE</span>
     </div>
     <div class="hero wrap">
@@ -28,9 +28,8 @@
         <p class="eyebrow">EXAM PREPARATION · ECONOMETRICS</p>
         <h1>Practice the theory.<br><em>Master the questions.</em></h1>
         <p class="intro">Explore past exam questions, filter by chapter and year, and generate your own four-question practice exam.</p>
-        <div class="hero-pills"><span>Original questions</span><span>Math notation</span><span>No login required</span></div>
       </div>
-      <div class="hero-graphic" aria-hidden="true"><span>ƒ</span><span>∑</span><span>χ²</span></div>
+      <div class="hero-graphic" aria-hidden="true"><img src="./images/normal-density.svg" width="560" height="335" alt=""></div>
     </div>
   </header>
   <main class="wrap main-content">
@@ -52,7 +51,7 @@
     <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" hidden>
       <div class="section-heading"><div><p class="eyebrow orange">PRACTICE MODE</p><h2>Create a four-question exam</h2></div></div>
       <div class="generator">
-        <div><strong>Four different questions, chosen at random.</strong><p>No duplicates within an exam. History/reflection questions are excluded; other unclassified questions can still appear.</p></div>
+        <div><strong>Four different questions, chosen at random.</strong></div>
         <button type="button" id="generate" class="button button-primary">↻ &nbsp; Generate four questions</button>
       </div>
       <div id="exam-message" class="exam-message" aria-live="polite">Choose “Generate four questions” to create a practice exam.</div>
@@ -63,8 +62,15 @@
       </div>
       <div id="exam-list" class="questions exam-questions"></div>
     </section>
-    <p class="site-disclaimer">Final-exam archive, 1994–2025 (available years only). Chapters follow the labels provided in the source LaTeX. Unclassified questions remain visible when browsing by year. No solutions are included.</p>
   </main>
-  <footer class="footer"><div class="wrap footer-row"><strong>ECON 532</strong><span>Study resource · Built for GitHub Pages · No responses or student data collected</span></div></footer>
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <strong>ECON 532</strong>
+      <span>Study resource · Created by Tomás Pacheco (<a href="mailto:tomas3@illinois.edu">tomas3@illinois.edu</a>)</span>
+    </div>
+    <div class="wrap footer-disclaimer">
+      <strong>Disclaimer:</strong> This independent study resource may contain errors in question transcription, figures, formatting, or chapter classifications. If you notice an error or have any questions, please contact me at <a href="mailto:tomas3@illinois.edu">tomas3@illinois.edu</a>.
+    </div>
+  </footer>
 </body>
 </html>
