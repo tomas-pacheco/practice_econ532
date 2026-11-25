@@ -21,7 +21,7 @@
   <header class="site-header">
     <div class="topbar wrap">
       <div class="brand"><a class="brand-mark" href="https://illinois.edu/" target="_blank" rel="noopener noreferrer" aria-label="University of Illinois Urbana-Champaign"><img class="brand-logo" src="https://cdn.brand.illinois.edu/logos/block-i/orange-and-white.svg" width="40" height="44" alt="University of Illinois Block I"></a><span><strong>ILLINOIS / ECON 532</strong><small>Past Exam Question Bank</small></span></div>
-      <span class="header-note">ANIL K. BERA · QUESTION ARCHIVE</span>
+      <span class="header-note">Professor Anil K. Bera</span>
     </div>
     <div class="hero wrap">
       <div>
@@ -45,11 +45,25 @@
         <label class="filterfield yearfield"><span>Year</span><select id="year"><option value="">All years</option></select></label>
         <button id="reset" type="button" class="button button-ghost">Clear filters</button>
       </div>
+      <div id="year-print-actions" class="year-print-actions" hidden>
+        <span id="year-print-description"></span>
+        <button id="print-year" type="button" class="button button-outline">Print full final</button>
+      </div>
       <div id="question-list" class="questions"><p class="loading">Loading questions…</p></div>
       <div id="empty" class="empty" hidden>No questions match these filters. Try another topic or year.</div>
     </section>
     <section id="panel-exam" role="tabpanel" aria-labelledby="tab-exam" hidden>
       <div class="section-heading"><div><p class="eyebrow orange">PRACTICE MODE</p><h2>Create a four-question exam</h2></div></div>
+      <div class="chapter-selector" aria-label="Choose chapters for the practice exam">
+        <div class="chapter-selector-heading">
+          <strong>Chapters to include</strong>
+          <span>Choose one or more, or use the entire eligible question bank.</span>
+        </div>
+        <div class="chapter-options" id="chapter-options" role="group" aria-label="Select chapters">
+          <button class="chapter-chip is-selected" id="chapters-all" type="button" aria-pressed="true">All eligible questions</button>
+        </div>
+        <p class="chapter-pool-status" id="chapter-pool-status" aria-live="polite"></p>
+      </div>
       <div class="generator">
         <div><strong>Four different questions, chosen at random.</strong></div>
         <button type="button" id="generate" class="button button-primary">↻ &nbsp; Generate four questions</button>

@@ -4,6 +4,8 @@ let questions = [];
 let gradeData = null;
 let chapterNames = {};
 let generatedIds = [];
+const selectedChapters = new Set(); // Empty means all eligible questions, including unclassified questions.
+
 const el = id => document.getElementById(id);
 const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -71,8 +73,60 @@ function filteredQuestions() {
     (!query||[q.title,q.id,String(q.year),...q.topics,q.body.replace(/<[^>]+>/g,' ')].join(' ').toLowerCase().includes(query)));
 }
 
+function updateYearPrintOption() {
+  const year=el('year').value;
+  const actions=el('year-print-actions');
+  actions.hidden=!year;
+  if(!year)return;
+  const count=questions.filter(q=>String(q.year)===year).length;
+  el('year-print-description').textContent=`${year} Final · ${count} questions · complete exam (all chapters and unclassified questions)`;
+  el('print-year').textContent=`Print ${year} final`;
+}
+
+function eligibleRandomQuestions() {
+  return questions.filter(q=>q.include_in_random &&
+    (selectedChapters.size===0 || q.chapters.some(n=>selectedChapters.has(n))));
+}
+
+function updateChapterSelection() {
+  el('chapters-all').classList.toggle('is-selected',selectedChapters.size===0);
+  el('chapters-all').setAttribute('aria-pressed',String(selectedChapters.size===0));
+  el('chapter-options').querySelectorAll('[data-chapter]').forEach(button=>{
+    const active=selectedChapters.has(Number(button.dataset.chapter));
+    button.classList.toggle('is-selected',active);
+    button.setAttribute('aria-pressed',String(active));
+  });
+  const n=eligibleRandomQuestions().length;
+  const status=el('chapter-pool-status');
+  status.textContent= n<4 ? `${n} eligible question${n===1?'':'s'}. Select another chapter to reach four.` :
+    `${n} eligible questions${selectedChapters.size===0?' (including unclassified questions)':''}`;
+  status.classList.toggle('warning',n<4);
+  el('generate').disabled=n<4;
+}
+
+function buildChapterSelector() {
+  Object.entries(chapterNames).sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([n,name])=>{
+    const button=document.createElement('button');
+    button.type='button';
+    button.className='chapter-chip';
+    button.dataset.chapter=n;
+    button.title=name;
+    button.textContent=`Chapter ${n}`;
+    button.setAttribute('aria-pressed','false');
+    button.addEventListener('click',()=>{
+      const value=Number(n);
+      if(selectedChapters.has(value))selectedChapters.delete(value);else selectedChapters.add(value);
+      updateChapterSelection();
+    });
+    el('chapter-options').appendChild(button);
+  });
+  el('chapters-all').addEventListener('click',()=>{selectedChapters.clear();updateChapterSelection();});
+  updateChapterSelection();
+}
+
 function renderBank() {
   const qs=filteredQuestions();
+  updateYearPrintOption();
   const container=el('question-list');
   el('bank-count').textContent=`${qs.length} of ${questions.length} questions`;
   el('empty').hidden=qs.length!==0;
@@ -136,6 +190,13 @@ async function init() {
       .forEach(([n,name])=>el('topic').add(new Option(`Chapter ${n} — ${name}`,n)));
     [...new Set(questions.map(q=>q.year))].sort((a,b)=>b-a)
       .forEach(y=>el('year').add(new Option(y,y)));
+    buildChapterSelector();
+    const chapterParam=new URLSearchParams(window.location.search).get('chapters');
+    if(chapterParam){
+      chapterParam.split(',').map(Number).filter(n=>Number.isInteger(n)&&Object.hasOwn(chapterNames,String(n)))
+        .forEach(n=>selectedChapters.add(n));
+      updateChapterSelection();
+    }
     renderBank();
     const param=new URLSearchParams(window.location.search).get('exam');
     if(param){
@@ -157,27 +218,37 @@ el('tab-exam').addEventListener('click',()=>selectTab('exam'));
 ['query','topic','year'].forEach(id=>el(id).addEventListener(id==='query'?'input':'change',renderBank));
 el('reset').addEventListener('click',()=>{el('query').value='';el('topic').value='';el('year').value='';renderBank();});
 el('generate').addEventListener('click',()=>{
-  const pool=questions.filter(q=>q.include_in_random);
+  const pool=eligibleRandomQuestions();
   if(pool.length<4){el('exam-message').hidden=false;el('exam-message').textContent='Need at least four eligible questions.';return;}
   const ids=shuffle(pool).slice(0,4).map(q=>q.id);
   const url=new URL(window.location.href);
   url.searchParams.set('exam',ids.join(','));
+  if(selectedChapters.size)url.searchParams.set('chapters',[...selectedChapters].sort((a,b)=>a-b).join(','));
+  else url.searchParams.delete('chapters');
   window.history.replaceState({},'',url.toString());
   renderExam(ids);
 });
+function openPrintableExam(param,value){
+  // Always open the independent print layout rather than printing the website.
+  const url=new URL('./print.html',window.location.href);
+  url.searchParams.set(param,value);
+  url.searchParams.set('autoprint','1');
+  const win=window.open(url.toString(),'_blank');
+  if(!win)window.location.href=url.toString();
+}
 el('print-exam').addEventListener('click',()=>{
-  if (generatedIds.length !== 4) return;
-  // A dedicated print document prevents any website navigation, tags, or controls
-  // from leaking into the exam. Open synchronously so popup blockers allow it.
-  const url = new URL('./print.html', window.location.href);
-  url.searchParams.set('exam', generatedIds.join(','));
-  url.searchParams.set('autoprint', '1');
-  const win = window.open(url.toString(), '_blank');
-  if (!win) window.location.href = url.toString();
+  if(generatedIds.length!==4)return;
+  openPrintableExam('exam',generatedIds.join(','));
+});
+el('print-year').addEventListener('click',()=>{
+  const year=el('year').value;
+  if(year && questions.some(q=>String(q.year)===year)) openPrintableExam('year',year);
 });
 el('copy-exam').addEventListener('click',async()=>{
   const url=new URL(window.location.href);
   url.searchParams.set('exam',generatedIds.join(','));
+  if(selectedChapters.size)url.searchParams.set('chapters',[...selectedChapters].sort((a,b)=>a-b).join(','));
+  else url.searchParams.delete('chapters');
   try {await navigator.clipboard.writeText(url.toString());el('copy-exam').textContent='Copied!';setTimeout(()=>el('copy-exam').textContent='Copy exam link',1500);}
   catch(e){window.prompt('Copy exam link:',url.toString());}
 });

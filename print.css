@@ -58,3 +58,8 @@ body{font:11pt/1.48 Georgia,"Times New Roman",serif}
   .source-figure{break-inside:avoid-page!important}
 }
 @media(max-width:700px){.toolbar{padding:14px;align-items:stretch;flex-direction:column}.sheet{margin:0 auto;padding:35px 20px;min-height:0}.question-heading{flex-wrap:wrap}.question-heading-left{white-space:normal}}
+
+/* Annual exam mode: preserve Part A / Part B sections and original question numbers. */
+.exam-part-heading{font:700 12pt/1.35 Georgia,"Times New Roman",serif;text-align:center;margin:26pt 0 15pt;padding:7pt 0;border-top:1pt solid #777;border-bottom:1pt solid #777;break-after:avoid-page;page-break-after:avoid}
+.exam-part-heading+.question{border-top:0;padding-top:0}
+@media print{.exam-part-heading{break-after:avoid-page!important;page-break-after:avoid!important}}

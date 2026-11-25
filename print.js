@@ -39,24 +39,52 @@ function imageReady(img) {
     img.addEventListener('error',resolve,{once:true});
   });
 }
-function questionHtml(q,index) {
+function questionHtml(q,index,mode='practice') {
+  const isYear=mode==='year';
   const source=`${q.year} Final${q.part?', Part '+q.part:''} · Q${q.number}`;
   const title = /^Question\s+\d+$/i.test(q.title.trim()) ? '' : `<div class="question-title">${escapeHtml(q.title)}</div>`;
   const brief = q.body.length < 1400 && !q.body.includes('<figure') && !q.body.includes('<table');
+  const number=isYear ? q.number : index+1;
+  const sourceHtml=isYear ? '' : `<div class="question-source">${escapeHtml(source)}</div>`;
   return `<section class="question${brief ? ' brief-question' : ''}">
-    <div class="question-heading"><div class="question-heading-left">Question ${index+1}${q.points_label ? `<small>[${escapeHtml(q.points_label)} points]</small>`:''}</div><div class="question-source">${escapeHtml(source)}</div></div>
+    <div class="question-heading"><div class="question-heading-left">Question ${number}${q.points_label ? `<small>[${escapeHtml(q.points_label)} points]</small>`:''}</div>${sourceHtml}</div>
     ${title}<div class="question-body">${q.body}</div></section>`;
+}
+function yearExamHtml(selected){
+  let lastPart=null;
+  return selected.map((q,index)=>{
+    const part=q.part && q.part!==lastPart ? `<h2 class="exam-part-heading">Part ${escapeHtml(q.part)}</h2>` : '';
+    lastPart=q.part;
+    return part+questionHtml(q,index,'year');
+  }).join('');
 }
 async function init(){
   try {
-    const ids=(new URLSearchParams(location.search).get('exam')||'').split(',');
-    if(ids.length!==4 || new Set(ids).size!==4) throw Error('An exam must include four different questions.');
+    const params=new URLSearchParams(location.search);
+    const year=params.get('year');
+    const isYear=year!==null;
+    const ids=(params.get('exam')||'').split(',');
+    if(isYear){
+      if(!/^\d{4}$/.test(year))throw Error('Invalid exam year.');
+    }else if(ids.length!==4 || new Set(ids).size!==4){
+      throw Error('A practice exam must include four different questions.');
+    }
     const [r1,r2]=await Promise.all([fetch('./data/questions.json'),fetch('./data/grades-2016.json')]);
     if(!r1.ok||!r2.ok) throw Error('Could not load exam data.');
     const [all,grades]=await Promise.all([r1.json(),r2.json()]);
-    const selected=ids.map(id=>all.find(q=>q.id===id));
-    if(selected.some(x=>!x)) throw Error('One of the questions was not found.');
-    el('questions').innerHTML=selected.map(questionHtml).join('');
+    let selected;
+    if(isYear){
+      // Archive order is original year/part/question order, including unclassified questions.
+      selected=all.filter(q=>String(q.year)===year);
+      if(!selected.length)throw Error('No archived final was found for that year.');
+      el('print-title').textContent=`ECON 532 - ${year} Final Examination`;
+      document.title=`ECON 532 - ${year} Final Examination`;
+      el('questions').innerHTML=yearExamHtml(selected);
+    }else{
+      selected=ids.map(id=>all.find(q=>q.id===id));
+      if(selected.some(x=>!x))throw Error('One of the questions was not found.');
+      el('questions').innerHTML=selected.map((q,i)=>questionHtml(q,i,'practice')).join('');
+    }
     addImageFallbacks(grades);
     await Promise.all([...document.querySelectorAll('.source-figure img')].map(imageReady));
     if(window.MathJax){
